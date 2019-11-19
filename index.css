@@ -1,0 +1,79 @@
+body, html{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.alBlog_PostCard{
+    margin: 8px;
+    padding: 8px;
+    width: 320px;
+    height: 320px;
+    border-radius: 24px;
+    background: black;
+    color: white
+}
+
+#AltPost{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background: white;
+}
+
+#PostHero{
+    background: black;
+    color: white;
+    height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px;
+}
+#PostHero>*{
+    max-width: 650px;
+    width: 100%;
+}
+
+#PostHero > h1 {
+    margin: 0px;
+    font-size: 4em;
+}
+
+#PostHero_time{
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 0.5px solid;
+}
+
+#PostHero_close{
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    position: absolute;
+    top: 2px;
+    left: 24px;
+}
+
+#AltEditor{
+    padding: 16px
+}
+
+
+
+
+
+
+
+
+.cdx-list{
+    padding-left: 24px;
+}
+h1.ce-header{
+    font-size: 2.5em;
+}
+h3.ce-header{
+    text-transform: uppercase;
+    font-weight: 600;
+}

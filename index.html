@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="editor.js"></script>
+    <script src="editor_modules/header.js"></script>
+    <script src="editor_modules/simple_image.js"></script>
+    <script src="editor_modules/list.js"></script>
+    <script src="editor_modules/table.js"></script>
+    <script src="editor_modules/paragraph.js"></script>
+    <script src="editor_modules/raw.js"></script>
+    <script src="editor_modules/code.js"></script>
+    <script src="altBlog.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="AltEditor"></div>
+    <script>
+        /*
+        let Blog = new AltBlog();
+
+        let data = [{"time":1574116026397,"blocks":[{"type":"header","data":{"text":"Enfoque","level":1}},{"type":"paragraph","data":{"text":"El enfoque de esta actividad es..."}}],"version":"2.15.1","title":"Números binarios","subtitle":"Las computadoras funcionan con 0's y 1's. Aunque al principio pueda parecer complicado, es tan sencillo como contar bolitas en unas tarjetas. "}, {}]
+
+        //document.body.append( Blog.openPost( data ) )
+
+        data.forEach((l, i)=>{
+            let PC = new PostCard(l)
+            PC.dom.addEventListener('click', function(){
+                document.body.append( Blog.openPost(l) )
+            })
+            document.querySelector("#AltBlog_allPosts").append(PC.dom)
+        })*/
+
+
+        let editor = new EditorJS({
+            tools: {
+                header: Header,
+                image: SimpleImage,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                },
+                paragraph: {
+                    class: Paragraph, 
+                    inlineToolbar: true
+                }, 
+                raw: RawTool,
+                code: CodeTool, 
+                table: Table
+            },
+            //data: data ? data: {},
+            placeholder: "Empiece a escribir o presione tab para añadir contenido", 
+            holderId: 'AltEditor'
+        }); 
+
+    </script>
+</body>
+</html>
