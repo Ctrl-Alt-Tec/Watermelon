@@ -9,24 +9,155 @@
     <script src="editor_modules/paragraph.js"></script>
     <script src="editor_modules/raw.js"></script>
     <script src="editor_modules/code.js"></script>
-    <script src="altBlog.js"></script>
-    <link rel="stylesheet" href="index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Watermelon</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+
+        body{
+
+            font-family: 'Montserrat', sans-serif;
+            margin: 0px;
+        }
+
+        .container_posts{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: #303030;
+        }
+
+        .post{
+            width: 100%;
+            max-width: 300px;
+            height: 400px;
+            margin: 8px;
+            padding: 8px;  
+            color: white;
+        }
+        .post .post_image{
+            width: 100%;
+            height: 50%;
+            background-size: cover !important;
+            background-position: center center !important;
+        }
+        .post h1.post_title, .post h3.post_subtitle{
+            margin: 8px 0px;
+        }
+        .post h1.post_title{
+            font-size: 2em;
+        }
+        .post h3.post_subtitle{
+            color: grey; 
+            font-size: 1.5em;
+        }
+        .post .post_author{
+            margin-bottom: 8px;
+        }
+
+        .addPost{
+            line-height: 80px;
+            text-align: center;
+            text-decoration: none;
+            width: 80px;
+            height: 80px;
+            background-color: #95E3BB;
+            cursor: pointer;
+            float: right;
+            margin-top: -80px;
+            margin-right: 5px;
+            font-size: 50px;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 24px;
+            right: 24px
+        }
+        
+        .WMToolbar{
+            background: black;
+            padding: 0px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            color: white;
+        }
+        .WMToolbar img.WMToolbar_logo{
+            height: 48px;
+            margin: 8px;
+        }
+        .WMToolbar div.WMToolbar_searchboxCont{ 
+            flex: 1;
+            width: 400px;
+            position: relative;
+        }
+        .WMToolbar input.WMToolbar_searchboxInput{
+            flex: 1;
+            width: 100%;
+            padding: 16px;
+            font-size: 2rem;
+            font-weight: 400;
+            border: none;
+            border-radius: 0;
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+            background: transparent;
+            color: inherit;
+        }
+        .WMToolbar input.WMToolbar_searchboxInput:focus{
+            background: white;
+            color: black;
+        }
+        .WMToolbar div.WMToolbar_searchboxOptions{
+            position: absolute;
+            width: 100%;
+            background: white;
+            padding: 16px;
+            box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+        }
+
+        .WMToolbar .WMToolbar_sections{
+            display: flex;
+            align-items: center;
+            flex: 1
+        }
+        .WMToolbar .WMToolbar_sections>*{
+            flex: 1;
+            padding: 16px;
+            font-size: 1.2em;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        .WMToolbar .WMToolbar_sections>*:hover{
+            background: rgba(200,200,200,0.4);
+        }
+    </style>
 </head>
 <body>
-    <div id="AltEditor"></div>
+    <div class="container_posts">
+
+    </div>
+
+    <div class="addPost">
+        +
+    </div>
+    <script src="WMToolbar.js"></script>
+
     <script>
-        let editor = new EditorJS({
+        /*let editor = new EditorJS({
             tools: {
                 header: Header,
                 image: SimpleImage,
                 list: {
                     class: List,
                     inlineToolbar: true,
-                },
+                }, 
                 paragraph: {
                     class: Paragraph, 
                     inlineToolbar: true
@@ -35,10 +166,70 @@
                 code: CodeTool, 
                 table: Table
             },
-            //data: data ? data: {},
             placeholder: "Empiece a escribir o presione tab para añadir contenido", 
             holderId: 'AltEditor'
-        }); 
+        }); */
+
+        class Post {
+            constructor(data){
+                this.dom = document.createElement('div');
+                this.dom.classList.add("post");
+
+                let img = document.createElement('div');
+                img.style.background = "url('"+data.image+"')";
+                img.classList.add('post_image');
+
+                let title = document.createElement('h1');
+                title.classList.add("post_title");
+                title.innerText = data.title;
+                
+                let author = document.createElement('div');
+                author.classList.add("post_author");
+                author.innerText = data.author;
+                
+                let date = document.createElement('div');
+                date.classList.add("post_date");
+                date.innerText = data.date.toLocaleDateString();
+                
+                let subtitle = document.createElement('h3'); 
+                subtitle.classList.add("post_subtitle"); 
+                subtitle.innerText = data.subtitle; 
+
+                this.dom.append(img, title, subtitle, author, date)
+            }
+        }
+
+        let posts = [
+            {
+                title: "Esto es un post", 
+                subtitle: "Subtítulo",
+                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
+                date: new Date(), 
+                author: "@edvilme" 
+            }, 
+            {
+                title: "Título", 
+                subtitle: "Subtítulo",
+                image: "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg",
+                date: new Date(), 
+                author: "@edvilme" 
+            }
+        ]
+
+        posts.forEach(function(item){
+            document.querySelector('.container_posts').append(new Post(item).dom)
+            document.querySelector('.container_posts').append(new Post(item).dom)
+            document.querySelector('.container_posts').append(new Post(item).dom)
+            document.querySelector('.container_posts').append(new Post(item).dom)
+            document.querySelector('.container_posts').append(new Post(item).dom)    
+        })
+
+
+        document.body.prepend( new WMToolbar({
+            sections: [
+                'Blog', 'Retos', 'Talleres', 'Recursos'
+            ]
+        }).dom )
 
     </script>
 </body>
