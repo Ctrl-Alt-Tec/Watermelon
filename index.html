@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="editor.js"></script>
-    <script src="editor_modules/header.js"></script>
-    <script src="editor_modules/simple_image.js"></script>
-    <script src="editor_modules/list.js"></script>
-    <script src="editor_modules/table.js"></script>
-    <script src="editor_modules/paragraph.js"></script>
-    <script src="editor_modules/raw.js"></script>
-    <script src="editor_modules/code.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBaAIgZY3coG_Vlhv5UdZrqrlxTeLm_-RE",
+        authDomain: "watermelon-974ca.firebaseapp.com",
+        databaseURL: "https://watermelon-974ca.firebaseio.com",
+        projectId: "watermelon-974ca",
+        storageBucket: "watermelon-974ca.appspot.com",
+        messagingSenderId: "458674442702",
+        appId: "1:458674442702:web:42fa5b0b32ce9253381b9f",
+        measurementId: "G-YMWDNF8GGQ"
+    }; 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,15 +37,14 @@
 
             font-family: 'Montserrat', sans-serif;
             margin: 0px;
+            background: #303030; 
         }
-
         .container_posts{
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             background: #303030;
         }
-
         .post{
             width: 100%;
             max-width: 300px;
@@ -126,7 +141,7 @@
             display: flex;
             align-items: center;
             flex: 1
-        }
+         }
         .WMToolbar .WMToolbar_sections>*{
             flex: 1;
             padding: 16px;
@@ -137,16 +152,24 @@
         .WMToolbar .WMToolbar_sections>*:hover{
             background: rgba(200,200,200,0.4);
         }
+
+
+        .WMToolbar_sections .active{
+            color: #FF535D; 
+            font-weight: 800; 
+        }
+        .WMToolbar_sections .nonactive{
+            color: white; 
+        }
     </style>
-</head>
+</head>  
 <body>
     <div class="container_posts">
-
     </div>
 
     <div class="addPost">
         +
-    </div>
+    </div> 
     <script src="WMToolbar.js"></script>
 
     <script>
@@ -195,7 +218,7 @@
                 subtitle.classList.add("post_subtitle"); 
                 subtitle.innerText = data.subtitle; 
 
-                this.dom.append(img, title, subtitle, author, date)
+                this.dom.append(img, title, subtitle, author, date);
             }
         }
 
@@ -205,31 +228,88 @@
                 subtitle: "Subtítulo",
                 image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
                 date: new Date(), 
-                author: "@edvilme" 
+                author: "@edvilme",
+                section: "Blog"
+            }, 
+            {
+                title: "Esto es un post", 
+                subtitle: "Subtítulo",
+                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
+                date: new Date(), 
+                author: "@edvilme",
+                section: "Blog"
             }, 
             {
                 title: "Título", 
                 subtitle: "Subtítulo",
                 image: "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg",
                 date: new Date(), 
-                author: "@edvilme" 
+                author: "@loulou",
+                section: "Recursos"
+            },
+            {
+                title: "Esto es un reto", 
+                subtitle: "Subtítulo",
+                image: "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg",
+                date: new Date(), 
+                author: "@loulou",
+                section: "Retos"
+            },
+            {
+                title: "Esto es un post", 
+                subtitle: "Subtítulo",
+                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
+                date: new Date(), 
+                author: "@edvilme",
+                section: "Blog"
+            },
+            {
+                title: "Esto es un taller", 
+                subtitle: "Subtítulo",
+                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
+                date: new Date(), 
+                author: "@edvilme",
+                section: "Talleres"
             }
         ]
 
-        posts.forEach(function(item){
-            document.querySelector('.container_posts').append(new Post(item).dom)
-            document.querySelector('.container_posts').append(new Post(item).dom)
-            document.querySelector('.container_posts').append(new Post(item).dom)
-            document.querySelector('.container_posts').append(new Post(item).dom)
-            document.querySelector('.container_posts').append(new Post(item).dom)    
-        })
+        
 
 
         document.body.prepend( new WMToolbar({
             sections: [
-                'Blog', 'Retos', 'Talleres', 'Recursos'
+                'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
             ]
         }).dom )
+
+
+        function showByType(type){
+            document.querySelector('.container_posts').innerHTML = ""
+            if(type == "Inicio"){
+                posts.forEach(function(item){
+                    document.querySelector('.container_posts').append(new Post(item).dom)
+                }) 
+            }else{
+                posts.filter(function(item){ return item.section==type }).forEach(function(item){
+                    document.querySelector('.container_posts').append(new Post(item).dom)   
+                })
+            }
+        }
+    
+        [...document.querySelector(".WMToolbar_sections").children].forEach(function(i){
+            i.addEventListener('click', function(){
+                showByType(i.innerText);
+                [...document.querySelector(".WMToolbar_sections").children].forEach(function(j){
+                    j.classList.remove("active");   
+                })
+                i.classList.add("active");
+            })
+        })
+
+        showByType("Inicio")
+        
+
+        //firebase().f
 
     </script>
 </body>
