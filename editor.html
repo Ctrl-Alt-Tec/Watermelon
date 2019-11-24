@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="editor.js"></script>
+    <script src="editor_modules/code.js"></script>
+    <script src="editor_modules/header.js"></script>
+    <script src="editor_modules/list.js"></script>
+    <script src="editor_modules/paragraph.js"></script>
+    <script src="editor_modules/raw.js"></script>
+    <script src="editor_modules/simple_image.js"></script>
+    <script src="editor_modules/table.js"></script>
+    <script src="editor_modules/embed.js"></script>
+    <style>
+        .ce-code__textarea{
+            background: black;
+            color: white;
+            border: none;
+            font-size: auto;
+        }
+
+
+        html, body{
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background: #303030;
+            color: white;
+        }
+        #AltEditor, #PostTitle, #PostSubtitle, hr{
+            width: 100%;
+            max-width: 650px;
+        }
+
+
+        #AltEditor{
+            
+        }
+        #PostTitle{
+            font-size: 3.5em;
+            margin: 16px 0px;
+            margin-bottom: 0px;
+        }
+        #PostSubtitle{
+            font-size: 2em;
+            font-weight: 600;
+            margin: 16px 0px;
+            margin-top: 0px;
+            color: #d0d0d0;
+        }
+    </style>
+</head>
+<body>
+    <h1 contenteditable="" id="PostTitle">Título</h1>
+    <h2 contenteditable="" id="PostSubtitle">Subtitulo</h1>
+        <hr>
+    <div id="AltEditor"></div>
+    <script>
+        let editor = new EditorJS({
+            tools: { 
+                header: Header,
+                image: SimpleImage,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                }, 
+                paragraph: {
+                    class: Paragraph, 
+                    inlineToolbar: true
+                }, 
+                raw: RawTool,
+                code: CodeTool, 
+                table: Table,
+                embed: Embed,
+            },
+            placeholder: "Empiece a escribir o presione tab para añadir contenido", 
+            holderId: 'AltEditor'
+        });     
+    </script>
+</body>
+</html>
