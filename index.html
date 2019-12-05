@@ -198,7 +198,14 @@
         document.body.prepend( new WMToolbar({
             sections: [
                 'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
-            ]
+            ],
+            sectionsOnClick: function(section){
+                showByType(section)
+            },
+            logo: {
+                src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
+            }, 
+            background: "black"
         }).dom )
 
 
@@ -215,7 +222,7 @@
             }
         }
     
-        [...document.querySelector(".WMToolbar_sections").children].forEach(function(i){
+        /*[...document.querySelector(".WMToolbar_sections").children].forEach(function(i){
             i.addEventListener('click', function(){
                 showByType(i.innerText);
                 [...document.querySelector(".WMToolbar_sections").children].forEach(function(j){
@@ -223,7 +230,7 @@
                 })
                 i.classList.add("active");
             })
-        })
+        })*/
 
         showByType("Inicio")
         

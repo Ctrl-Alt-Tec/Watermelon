@@ -120,11 +120,7 @@
 
     <script>
 
-        document.body.prepend( new WMToolbar({
-            sections: [
-                'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
-            ]
-        }).dom )
+        
 
         class Editor{
             async loadData(){
@@ -226,6 +222,22 @@
                 this.postBtn.id = "PostUpdate";
 
                 postHeader.append(this.postBtn, this.postTitle, this.postSubtitle);
+
+
+                postHeader.prepend( new WMToolbar({
+                    sections: [
+                        'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
+                    ],
+                    sectionsOnClick: function(section){
+                        console.log(section)
+                    },
+                    logo: {
+                        src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
+                        onclick: function(){
+                            document.location.href = "index.html";
+                        }
+                    },
+                }).dom )
 
                 this.postEditor = document.createElement('div');
                 this.postEditor.id="PostEditor";

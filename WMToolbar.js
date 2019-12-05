@@ -5,9 +5,14 @@ class WMToolbar {
         this.dom = document.createElement('div');
         this.dom.classList.add("WMToolbar");
 
+        this.dom.style.background = options.background;
+
         let logo = document.createElement('img');
-        logo.src = "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png";
-        logo.classList.add("WMToolbar_logo")
+        logo.src = options.logo.src;
+        logo.classList.add("WMToolbar_logo");
+
+        logo.addEventListener('click', options.logo.onclick)
+
         this.dom.append(logo);
 
         let searchboxCont = document.createElement('div');
@@ -27,11 +32,17 @@ class WMToolbar {
         
         let sections = document.createElement('div');
         sections.classList.add("WMToolbar_sections");
+        
         options.sections.forEach(element => {
            let section = document.createElement('div');
            section.innerText = element;
+
+            section.addEventListener('click', function(){
+                options.sectionsOnClick(element);
+            })
            sections.append(section)
         });
+        
         this.dom.append(sections)
 
         searchboxInput.addEventListener('input', function(e){
