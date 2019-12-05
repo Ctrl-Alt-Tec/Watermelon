@@ -14,16 +14,19 @@
     <script src="editor_modules/simple_image.js"></script>
     <script src="editor_modules/table.js"></script>
     <script src="editor_modules/embed.js"></script>
+    <link rel="stylesheet" href="WMToolbar.css">
+
     <style>
         .ce-code__textarea{
             background: black;
             color: white;
             border: none;
             font-size: auto;
+            margin: 0;
         }
 
 
-        html, body{
+        html, body, #AltEditor{
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
             flex-direction: column;
@@ -31,22 +34,21 @@
             width: 100%;
             background: #303030;
             color: white;
-            padding: 8px;
             box-sizing: border-box;
+            margin: 0;
         }
-        #AltEditor, #PostTitle, #PostSubtitle, hr{
-            width: 100%;
-            max-width: 650px;
-        }
-
-
         #AltEditor{
             
+        }
+        #PostEditor, #PostTitle, #PostSubtitle, hr{
+            width: 100%;
+            max-width: 650px;
         }
         #PostTitle{
             font-size: 3.5em;
             margin: 16px 0px;
             margin-bottom: 0px;
+            margin-top: auto;
         }
         #PostSubtitle{
             font-size: 2em;
@@ -55,34 +57,200 @@
             margin-top: 0px;
             color: #d0d0d0;
         }
+        #PostHeader{
+            width: 100%;
+            height: 80vh;
+            /*background: black;*/
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            background: url("https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg");
+            background-size: cover;
+            background-position: top;
+            background-attachment: fixed;
+        }
+        #PostUpdate{
+            margin: 8px;
+            align-self: flex-end;
+            justify-self: flex-start;
+            -webkit-appearance: none;
+            background: rgb(0,122,255);
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+        }
+        .codex-editor__redactor{
+            /*margin-right: none !important;*/
+        }
     </style>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBaAIgZY3coG_Vlhv5UdZrqrlxTeLm_-RE",
+        authDomain: "watermelon-974ca.firebaseapp.com",
+        databaseURL: "https://watermelon-974ca.firebaseio.com",
+        projectId: "watermelon-974ca",
+        storageBucket: "watermelon-974ca.appspot.com",
+        messagingSenderId: "458674442702",
+        appId: "1:458674442702:web:42fa5b0b32ce9253381b9f",
+        measurementId: "G-YMWDNF8GGQ"
+    }; 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    let db = firebase.firestore();
+
+    </script>
 </head>
 <body>
-    <h1 contenteditable="" id="PostTitle">Título</h1>
-    <h2 contenteditable="" id="PostSubtitle">Subtitulo</h1>
-        <hr>
-    <div id="AltEditor"></div>
+
+    <script src="WMToolbar.js"></script>
+
     <script>
-        let editor = new EditorJS({
-            tools: { 
-                header: Header,
-                image: SimpleImage,
-                list: {
-                    class: List,
-                    inlineToolbar: true,
-                }, 
-                paragraph: {
-                    class: Paragraph, 
-                    inlineToolbar: true
-                }, 
-                raw: RawTool,
-                code: CodeTool, 
-                table: Table,
-                embed: Embed,
-            },
-            placeholder: "Empiece a escribir o presione tab para añadir contenido", 
-            holderId: 'AltEditor'
-        });     
+
+        document.body.prepend( new WMToolbar({
+            sections: [
+                'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
+            ]
+        }).dom )
+
+        class Editor{
+            async loadData(){
+                let scope = this;
+                
+                let data = await db.collection("posts").doc(scope.postId).get();
+
+                scope.postTitle.innerText = data.data()['title'];
+                scope.postSubtitle.innerText = data.data()['subtitle'];
+                scope._editor = new EditorJS({
+                    tools: { 
+                        header: Header,
+                        image: SimpleImage,
+                        list: {
+                            class: List,
+                            inlineToolbar: true,
+                        }, 
+                        paragraph: {
+                            class: Paragraph, 
+                            inlineToolbar: true
+                        }, 
+                        //raw: RawTool,
+                        code: CodeTool, 
+                        table: Table,
+                        embed: {
+                            class: Embed, 
+                            inlineToolbar: true,
+                        },
+                    },
+                    placeholder: "Empiece a escribir o presione tab para añadir contenido", 
+                    holder: scope.postEditor,
+                    data: data.data(),
+                });
+            }  
+
+            loadEmpty(){
+                let scope = this;
+                scope._editor = new EditorJS({
+                    tools: { 
+                        header: Header,
+                        image: SimpleImage,
+                        list: {
+                            class: List,
+                            inlineToolbar: true,
+                        }, 
+                        paragraph: {
+                            class: Paragraph, 
+                            inlineToolbar: true
+                        }, 
+                        //raw: RawTool,
+                        code: CodeTool, 
+                        table: Table,
+                        embed: {
+                            class: Embed, 
+                            inlineToolbar: true,
+                        },
+                    },
+                    placeholder: "Empiece a escribir o presione tab para añadir contenido", 
+                    holder: scope.postEditor,
+                });
+            } 
+
+            update(){
+                let scope = this;
+                this._editor.save().then(function(data){
+                    console.log(data)
+                    db.collection("posts").doc(scope.postId).update({
+                        title: scope.postTitle.innerText, 
+                        subtitle: scope.postSubtitle.innerText,
+                        ...data
+                    })
+                    .then(function(){
+                        console.log("Doument updated")
+                    })
+                    .catch(function(){
+                        console.log("Document not updated")
+                    })
+                })
+            }
+
+            constructor(postId){
+                let scope = this;
+                this.postId = postId;
+                this.dom = document.createElement('div');
+                this.dom.id = "AltEditor";   
+                let postHeader = document.createElement('div');
+                postHeader.id="PostHeader";
+                this.postTitle = document.createElement('h1');
+                this.postTitle.id = "PostTitle";
+                this.postTitle.innerText = "Título";
+                this.postTitle.contentEditable = "true";
+                this.postSubtitle = document.createElement('h2');
+                this.postSubtitle.id = "PostSubtitle";
+                this.postSubtitle.innerText = "Subtitulo";
+                this.postSubtitle.contentEditable = "true";
+
+                this.postBtn = document.createElement('button');
+                this.postBtn.innerText = "Update";
+                this.postBtn.id = "PostUpdate";
+
+                postHeader.append(this.postBtn, this.postTitle, this.postSubtitle);
+
+                this.postEditor = document.createElement('div');
+                this.postEditor.id="PostEditor";
+                
+                this.dom.append(postHeader, this.postEditor);
+                if(postId){
+                    this.loadData();
+                    scope.postBtn.addEventListener('click', function(){
+                        scope.update()
+                    }); 
+                }else{
+                    this.loadEmpty();
+
+                }              
+            }
+        }
+
+        
+
+        
+        //initEditor();
+
+        let altEditor = new Editor("Rr1SzasdZ9QCRz9MElhS");
+        document.body.append(altEditor.dom);
+
     </script>
 </body>
 </html>

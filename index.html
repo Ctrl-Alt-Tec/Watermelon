@@ -3,6 +3,8 @@
 <head>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -23,6 +25,9 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+
+    let db = firebase.firestore();
+
     </script>
 
     <meta charset="UTF-8">
@@ -31,6 +36,7 @@
     <title>Watermelon</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="WMToolbar.css">
     <style>
 
         body{
@@ -91,76 +97,7 @@
             right: 24px
         }
         
-        .WMToolbar{
-            background: black;
-            padding: 0px;
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            color: white;
-        }
-        .WMToolbar img.WMToolbar_logo{
-            height: 48px;
-            margin: 8px;
-        }
-        .WMToolbar div.WMToolbar_searchboxCont{ 
-            flex: 1;
-            width: 400px;
-            position: relative;
-        }
-        .WMToolbar input.WMToolbar_searchboxInput{
-            flex: 1;
-            width: 100%;
-            padding: 16px;
-            font-size: 2rem;
-            font-weight: 400;
-            border: none;
-            border-radius: 0;
-            position: relative;
-            z-index: 2;
-            box-sizing: border-box;
-            background: transparent;
-            color: inherit;
-        }
-        .WMToolbar input.WMToolbar_searchboxInput:focus{
-            background: white;
-            color: black;
-        }
-        .WMToolbar div.WMToolbar_searchboxOptions{
-            position: absolute;
-            width: 100%;
-            background: white;
-            padding: 16px;
-            box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
-        }
-
-        .WMToolbar .WMToolbar_sections{
-            display: flex;
-            align-items: center;
-            flex: 1
-         }
-        .WMToolbar .WMToolbar_sections>*{
-            flex: 1;
-            padding: 16px;
-            font-size: 1.2em;
-            font-family: Arial, Helvetica, sans-serif;
-            text-align: center;
-        }
-        .WMToolbar .WMToolbar_sections>*:hover{
-            background: rgba(200,200,200,0.4);
-        }
-
-
-        .WMToolbar_sections .active{
-            color: #FF535D; 
-            font-weight: 800; 
-        }
-        .WMToolbar_sections .nonactive{
-            color: white; 
-        }
+        
     </style>
 </head>  
 <body>
@@ -292,6 +229,45 @@
         
 
         //firebase().f
+
+        var post = {
+            title: "Esto es un taller", 
+            subtitle: "Subtítulo",
+            image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
+            //date: new Date(), 
+            author: "@edvilme",
+            section: "Talleres",
+            "time":1574735800117,
+            "blocks":[
+                {"type":"paragraph","data":{"text":"Prophet Oprheus, our mascot is here to guide you through making your own personal website.&nbsp;"}},
+                {"type":"paragraph","data":{"text":"It will look something like this:"}},
+                {"type":"image","data":{"url":"https://hackclub.com/dino_site-51d2c903d7ba715330e9f18268d5f720.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
+                {"type":"paragraph","data":{"text":"Here's the <a href=\"https://website--prophetorpheus.repl.co/\">live demo</a> and final code (see index.html and style.css). This workshop should take around 45 minutes."}},
+                {"type":"header","data":{"text":"Part I: Setup","level":1}},
+                {"type":"header","data":{"text":"Getting ready to repl it on Repl.it","level":2}},
+                {"type":"paragraph","data":{"text":"Repl-it is an online code editor. It's similar to Google Docs, but has some important features that make it much better for typing code than a regular text editor.&nbsp;"}},
+                {"type":"paragraph","data":{"text":"To get started, go to https://repl.it/languages/html. Your coding environment will spin up in just a few seconds.&nbsp;"}},
+                {"type":"image","data":{"url":"https://hackclub.com/html_repl-2fe7a9727c9ac61adfb52fdb7eb8f240.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
+                {"type":"header","data":{"text":"Part II: The HTML File","level":1}},
+                {"type":"header","data":{"text":"1) The HTML file","level":2}},
+                {"type":"paragraph","data":{"text":"HTML stands for Hypertext Markup Language. Every website from the New York Times to Twitch uses HTML to display content on the web.&nbsp;"}},
+                {"type":"paragraph","data":{"text":"You should have the index.html file open, and a bunch of text with &lt; &amp; &gt; symbols. That's HTML!"}},
+                {"type":"image","data":{"url":"https://hackclub.com/html_repl-2fe7a9727c9ac61adfb52fdb7eb8f240.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
+                {"type":"paragraph","data":{"text":"Rep.it gives us some code to start out with, but we're going to start from scratch. Go ahead and delete everything in the index.html file and then <b>type</b>&nbsp;in the following. <b>DO NOT COPY AND PASTE.</b>"}},
+                {"type":"code","data":{"code":"<!DOCTYPE html>\n<html>\n  <head>\n  </head>\n  <body>\n  </body>\n</html>"}},
+                {"type":"paragraph","data":{"text":"This structure is common to all HTML pages, In fact, you can take a look for yourself! Just click on any web page, including this one, and click \"View page source\" (sometimes called \"Inspect\" depending on your browser) to see what's going on behind the scenes. You'll find each of these elements on every page -- the doctype, and an HTML tag wrapped around a head and a body.&nbsp;"}},
+                {"type":"image","data":{"url":"https://hackclub.com/elements-panel-575bf8916c4153dcb1f109d27498ec06.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
+                {"type":"paragraph","data":{"text":"Before proceeding, we'll go briefly over what our template means.&nbsp;"}},
+                {"type":"paragraph","data":{"text":"HTML works by storing information inside tags. &lt;html&gt;&lt;/html&gt; is an example of"}}
+            ],
+            "version":"2.15.1"
+        }
+
+
+        db.collection("posts").doc("xQSzCK8uA6Fdsno2Cg5b").get().then(data=>{
+            console.log(data.data())
+        })
+
 
     </script>
 </body>
