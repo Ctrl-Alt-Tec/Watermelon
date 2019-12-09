@@ -119,9 +119,6 @@
     <script src="WMToolbar.js"></script>
 
     <script>
-
-        
-
         class Editor{
             async loadData(){
                 let scope = this;
@@ -257,10 +254,8 @@
 
         
 
-        
-        //initEditor();
-
-        let altEditor = new Editor("Rr1SzasdZ9QCRz9MElhS");
+        let postID = new URLSearchParams(window.location.search).get('post');
+        let altEditor = new Editor(postID);
         document.body.append(altEditor.dom);
 
     </script>

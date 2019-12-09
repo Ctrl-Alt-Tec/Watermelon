@@ -110,10 +110,8 @@
     <script src="WMToolbar.js"></script>
 
     <script>
-        
-
         class Post {
-            constructor(data){
+            constructor(id, data, options){
                 this.dom = document.createElement('div');
                 this.dom.classList.add("post");
 
@@ -131,13 +129,18 @@
                 
                 let date = document.createElement('div');
                 date.classList.add("post_date");
-                date.innerText = data.date.toLocaleDateString();
+                //date.innerText = data.date.toLocaleDateString();
                 
                 let subtitle = document.createElement('h3'); 
                 subtitle.classList.add("post_subtitle"); 
                 subtitle.innerText = data.subtitle; 
 
                 this.dom.append(img, title, subtitle, author, date);
+
+                this.dom.addEventListener('click', function(){
+                    options.onClick(id);
+                })
+
             }
         }
 
@@ -209,72 +212,33 @@
         }).dom )
 
 
-        function showByType(type){
+        async function getPosts(){
+            return new Promise(function(resolve, reject){
+                db.collection("posts").get().then(function(posts){
+                    resolve(posts);
+                })
+            })
+        }
+ 
+        async function showByType(type){
+            let _posts = await getPosts();
             document.querySelector('.container_posts').innerHTML = ""
             if(type == "Inicio"){
-                posts.forEach(function(item){
-                    document.querySelector('.container_posts').append(new Post(item).dom)
+                _posts.forEach(function(item){
+                    document.querySelector('.container_posts').append(new Post(item.id, item.data(), {
+                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
+                    }).dom)
                 }) 
             }else{
-                posts.filter(function(item){ return item.section==type }).forEach(function(item){
-                    document.querySelector('.container_posts').append(new Post(item).dom)   
+                _posts.filter(function(item){ return item.data().section==type }).forEach(function(item){
+                    document.querySelector('.container_posts').append(new Post(item.id, item.data(), {
+                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
+                    }).dom)   
                 })
             }
         }
-    
-        /*[...document.querySelector(".WMToolbar_sections").children].forEach(function(i){
-            i.addEventListener('click', function(){
-                showByType(i.innerText);
-                [...document.querySelector(".WMToolbar_sections").children].forEach(function(j){
-                    j.classList.remove("active");   
-                })
-                i.classList.add("active");
-            })
-        })*/
 
         showByType("Inicio")
-        
-
-        //firebase().f
-
-        var post = {
-            title: "Esto es un taller", 
-            subtitle: "Subtítulo",
-            image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
-            //date: new Date(), 
-            author: "@edvilme",
-            section: "Talleres",
-            "time":1574735800117,
-            "blocks":[
-                {"type":"paragraph","data":{"text":"Prophet Oprheus, our mascot is here to guide you through making your own personal website.&nbsp;"}},
-                {"type":"paragraph","data":{"text":"It will look something like this:"}},
-                {"type":"image","data":{"url":"https://hackclub.com/dino_site-51d2c903d7ba715330e9f18268d5f720.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
-                {"type":"paragraph","data":{"text":"Here's the <a href=\"https://website--prophetorpheus.repl.co/\">live demo</a> and final code (see index.html and style.css). This workshop should take around 45 minutes."}},
-                {"type":"header","data":{"text":"Part I: Setup","level":1}},
-                {"type":"header","data":{"text":"Getting ready to repl it on Repl.it","level":2}},
-                {"type":"paragraph","data":{"text":"Repl-it is an online code editor. It's similar to Google Docs, but has some important features that make it much better for typing code than a regular text editor.&nbsp;"}},
-                {"type":"paragraph","data":{"text":"To get started, go to https://repl.it/languages/html. Your coding environment will spin up in just a few seconds.&nbsp;"}},
-                {"type":"image","data":{"url":"https://hackclub.com/html_repl-2fe7a9727c9ac61adfb52fdb7eb8f240.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
-                {"type":"header","data":{"text":"Part II: The HTML File","level":1}},
-                {"type":"header","data":{"text":"1) The HTML file","level":2}},
-                {"type":"paragraph","data":{"text":"HTML stands for Hypertext Markup Language. Every website from the New York Times to Twitch uses HTML to display content on the web.&nbsp;"}},
-                {"type":"paragraph","data":{"text":"You should have the index.html file open, and a bunch of text with &lt; &amp; &gt; symbols. That's HTML!"}},
-                {"type":"image","data":{"url":"https://hackclub.com/html_repl-2fe7a9727c9ac61adfb52fdb7eb8f240.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
-                {"type":"paragraph","data":{"text":"Rep.it gives us some code to start out with, but we're going to start from scratch. Go ahead and delete everything in the index.html file and then <b>type</b>&nbsp;in the following. <b>DO NOT COPY AND PASTE.</b>"}},
-                {"type":"code","data":{"code":"<!DOCTYPE html>\n<html>\n  <head>\n  </head>\n  <body>\n  </body>\n</html>"}},
-                {"type":"paragraph","data":{"text":"This structure is common to all HTML pages, In fact, you can take a look for yourself! Just click on any web page, including this one, and click \"View page source\" (sometimes called \"Inspect\" depending on your browser) to see what's going on behind the scenes. You'll find each of these elements on every page -- the doctype, and an HTML tag wrapped around a head and a body.&nbsp;"}},
-                {"type":"image","data":{"url":"https://hackclub.com/elements-panel-575bf8916c4153dcb1f109d27498ec06.png","caption":"","withBorder":false,"withBackground":false,"stretched":false}},
-                {"type":"paragraph","data":{"text":"Before proceeding, we'll go briefly over what our template means.&nbsp;"}},
-                {"type":"paragraph","data":{"text":"HTML works by storing information inside tags. &lt;html&gt;&lt;/html&gt; is an example of"}}
-            ],
-            "version":"2.15.1"
-        }
-
-
-        db.collection("posts").doc("xQSzCK8uA6Fdsno2Cg5b").get().then(data=>{
-            console.log(data.data())
-        })
-
 
     </script>
 </body>
