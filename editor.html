@@ -15,6 +15,9 @@
     <script src="editor_modules/table.js"></script>
     <script src="editor_modules/embed.js"></script>
     <link rel="stylesheet" href="WMToolbar.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
 
     <style>
         .ce-code__textarea{
@@ -49,6 +52,7 @@
             margin: 16px 0px;
             margin-bottom: 0px;
             margin-top: auto;
+            font-family: 'Source Serif Pro';
         }
         #PostSubtitle{
             font-size: 2em;
@@ -65,7 +69,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            background: url("https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg");
             background-size: cover;
             background-position: top;
             background-attachment: fixed;
@@ -127,6 +130,7 @@
 
                 scope.postTitle.innerText = data.data()['title'];
                 scope.postSubtitle.innerText = data.data()['subtitle'];
+                scope.postHeader.style.backgroundImage="url('"+ data.data().image +"')";
                 scope._editor = new EditorJS({
                     tools: { 
                         header: Header,
@@ -184,17 +188,32 @@
                 let scope = this;
                 this._editor.save().then(function(data){
                     console.log(data)
-                    db.collection("posts").doc(scope.postId).update({
-                        title: scope.postTitle.innerText, 
-                        subtitle: scope.postSubtitle.innerText,
-                        ...data
-                    })
-                    .then(function(){
-                        console.log("Doument updated")
-                    })
-                    .catch(function(){
-                        console.log("Document not updated")
-                    })
+                    if(postID){
+                        db.collection("posts").doc(scope.postId).update({
+                            title: scope.postTitle.innerText, 
+                            subtitle: scope.postSubtitle.innerText,
+                            ...data
+                        })
+                        .then(function(){
+                            console.log("Doument updated")
+                        })
+                        .catch(function(){
+                            console.log("Document not updated")
+                        })
+                    } else {
+                        db.collection("posts").add({
+                            title: scope.postTitle.innerText, 
+                            subtitle: scope.postSubtitle.innerText,
+                            ...data
+                        })
+                        .then(function(docRef){
+                            //console.log("Doument updated")
+                            window.location.href = 'editor.html?post='+docRef.id
+                        })
+                        .catch(function(){
+                            console.log("Document not updated")
+                        })
+                    }
                 })
             }
 
@@ -203,8 +222,11 @@
                 this.postId = postId;
                 this.dom = document.createElement('div');
                 this.dom.id = "AltEditor";   
-                let postHeader = document.createElement('div');
-                postHeader.id="PostHeader";
+                this.postHeader = document.createElement('div');
+                this.postHeader.id="PostHeader";
+
+                
+
                 this.postTitle = document.createElement('h1');
                 this.postTitle.id = "PostTitle";
                 this.postTitle.innerText = "Título";
@@ -215,13 +237,12 @@
                 this.postSubtitle.contentEditable = "true";
 
                 this.postBtn = document.createElement('button');
-                this.postBtn.innerText = "Update";
                 this.postBtn.id = "PostUpdate";
 
-                postHeader.append(this.postBtn, this.postTitle, this.postSubtitle);
+                this.postHeader.append(this.postBtn, this.postTitle, this.postSubtitle);
 
 
-                postHeader.prepend( new WMToolbar({
+                this.postHeader.prepend( new WMToolbar({
                     sections: [
                         'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
                     ],
@@ -239,16 +260,19 @@
                 this.postEditor = document.createElement('div');
                 this.postEditor.id="PostEditor";
                 
-                this.dom.append(postHeader, this.postEditor);
+                this.dom.append(this.postHeader, this.postEditor);
                 if(postId){
                     this.loadData();
-                    scope.postBtn.addEventListener('click', function(){
-                        scope.update()
-                    }); 
+                    this.postBtn.innerText = "Update";
+
                 }else{
                     this.loadEmpty();
+                    this.postBtn.innerText = "Publish";
 
                 }              
+                scope.postBtn.addEventListener('click', function(){
+                    scope.update(postID)
+                }); 
             }
         }
 

@@ -35,6 +35,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Watermelon</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="WMToolbar.css">
     <style>
@@ -54,26 +56,31 @@
         .post{
             width: 100%;
             max-width: 300px;
-            height: 400px;
-            margin: 8px;
+            margin: 16px;
             padding: 8px;  
             color: white;
         }
         .post .post_image{
             width: 100%;
-            height: 50%;
+            height: 200px;
             background-size: cover !important;
             background-position: center center !important;
         }
         .post h1.post_title, .post h3.post_subtitle{
-            margin: 8px 0px;
+            margin: 0px;
         }
         .post h1.post_title{
-            font-size: 2em;
+            font-size: 2.5em;
+            font-weight: 100;
+            font-family: 'Source Serif Pro', serif;
         }
         .post h3.post_subtitle{
             color: grey; 
             font-size: 1.5em;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 8px;
         }
         .post .post_author{
             margin-bottom: 8px;
@@ -101,14 +108,7 @@
     </style>
 </head>  
 <body>
-    <div class="container_posts">
-    </div>
-
-    <div class="addPost">
-        +
-    </div> 
     <script src="WMToolbar.js"></script>
-
     <script>
         class Post {
             constructor(id, data, options){
@@ -144,101 +144,65 @@
             }
         }
 
-        let posts = [
-            {
-                title: "Esto es un post", 
-                subtitle: "Subtítulo",
-                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
-                date: new Date(), 
-                author: "@edvilme",
-                section: "Blog"
-            }, 
-            {
-                title: "Esto es un post", 
-                subtitle: "Subtítulo",
-                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
-                date: new Date(), 
-                author: "@edvilme",
-                section: "Blog"
-            }, 
-            {
-                title: "Título", 
-                subtitle: "Subtítulo",
-                image: "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg",
-                date: new Date(), 
-                author: "@loulou",
-                section: "Recursos"
-            },
-            {
-                title: "Esto es un reto", 
-                subtitle: "Subtítulo",
-                image: "https://cdn.pixabay.com/photo/2018/05/28/22/11/message-in-a-bottle-3437294__340.jpg",
-                date: new Date(), 
-                author: "@loulou",
-                section: "Retos"
-            },
-            {
-                title: "Esto es un post", 
-                subtitle: "Subtítulo",
-                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
-                date: new Date(), 
-                author: "@edvilme",
-                section: "Blog"
-            },
-            {
-                title: "Esto es un taller", 
-                subtitle: "Subtítulo",
-                image: "https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh4.googleusercontent.com/VQyrPPyh-FGdV2BJtlcwDphesnxERD6SLWvGtARygLDVNSsXhFF0kzG_yXvLyiARZbKIG3VYF_CIbF4_B-Wy3Eu7kKhHKKR3pq_2ob2pdZgxt_Wz_uqXjRMrhIBKREQnJo--Ui9b", 
-                date: new Date(), 
-                author: "@edvilme",
-                section: "Talleres"
-            }
-        ]
+
 
         
-
-
-        document.body.prepend( new WMToolbar({
-            sections: [
-                'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
-            ],
-            sectionsOnClick: function(section){
-                showByType(section)
-            },
-            logo: {
-                src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
-            }, 
-            background: "black"
-        }).dom )
-
-
-        async function getPosts(){
-            return new Promise(function(resolve, reject){
+        class AltBlog{
+            async getPosts(){
+                let scope = this;
                 db.collection("posts").get().then(function(posts){
-                    resolve(posts);
-                })
-            })
-        }
- 
-        async function showByType(type){
-            let _posts = await getPosts();
-            document.querySelector('.container_posts').innerHTML = ""
-            if(type == "Inicio"){
-                _posts.forEach(function(item){
-                    document.querySelector('.container_posts').append(new Post(item.id, item.data(), {
-                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
-                    }).dom)
-                }) 
-            }else{
-                _posts.filter(function(item){ return item.data().section==type }).forEach(function(item){
-                    document.querySelector('.container_posts').append(new Post(item.id, item.data(), {
-                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
-                    }).dom)   
+                    scope.posts = posts;
+                    scope.showByType("Inicio"); 
                 })
             }
-        }
 
-        showByType("Inicio")
+            showByType(type){
+                let scope = this;
+                document.querySelector('.container_posts').innerHTML = ""
+                if(type == "Inicio"){
+                    scope.posts.forEach(function(item){
+                        scope.dom.append(new Post(item.id, item.data(), {
+                            onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
+                        }).dom)
+                    }) 
+                }else{
+                    scope.posts.filter(function(item){ return item.data().section==type }).forEach(function(item){
+                        scope.dom.append(new Post(item.id, item.data(), {
+                            onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
+                        }).dom)   
+                    })
+                }   
+            }
+
+            constructor() {
+                let scope = this;
+                this.dom = document.createElement('div');
+                this.dom.classList.add("container_posts");
+                this.newPostBtn = document.createElement('div');
+                this.newPostBtn.classList.add('addPost');
+                this.newPostBtn.innerText = '+';
+                this.newPostBtn.addEventListener('click', function(){
+                    window.location.href = 'editor.html'
+                })
+                document.body.prepend( new WMToolbar({
+                    sections: [
+                        'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
+                    ],
+                    sectionsOnClick: function(section){
+                        scope.showByType(section)
+                    },
+                    logo: {
+                        src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
+                    }, 
+                    background: "black"
+                }).dom )
+                document.body.append(this.dom, this.newPostBtn);
+                this.getPosts();
+            }
+        }
+        
+        let alt = new AltBlog();
+        //showByType("Inicio")
 
     </script>
 </body>
