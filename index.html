@@ -4,6 +4,7 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-auth.js"></script>
 
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -166,12 +167,55 @@
                         }).dom)
                     }) 
                 }else{
-                    scope.posts.filter(function(item){ return item.data().section==type }).forEach(function(item){
+                    scope.posts.docs.filter(function(item){ return item.data().section==type }).forEach(function(item){
                         scope.dom.append(new Post(item.id, item.data(), {
                             onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
                         }).dom)   
                     })
                 }   
+            }
+
+            search(str) {
+                let scope = this; 
+                document.querySelector('.container_posts').innerHTML = ""
+                let results = scope.posts.docs.filter(function(item){ return item.data().title.toLowerCase().includes(str.toLowerCase()) || item.data().subtitle.toLowerCase().includes(str.toLowerCase()) || item.data().author.toLowerCase().includes(str.toLowerCase())  })
+                scope.dom.style.padding = "0px";
+
+                results.forEach(function(item){
+                    scope.dom.append(new Post(item.id, item.data(), {
+                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
+                    }).dom)   
+                })
+
+                if(results.length == 0){
+                    scope.dom.append("¿Ves? Está vacío, no hay ningún post para: " + str);
+                    scope.dom.style.color = "white"; 
+                    scope.dom.style.padding = "10%"; 
+                }
+            }
+
+            login(){
+                this.dom.innerHTML = "";
+                this.dom.style.padding = "10%"; 
+
+                let title = document.createElement('h1');
+                title.innerText = "Inicia sesión";
+                title.style.color = "white"; 
+                title.style.textAlign = "center"; 
+                title.style.width = "100%"; 
+
+                let username = document.createElement('input');
+                username.name = "username";
+                username.placeholder = "Usuario"; 
+                let password = document.createElement('input');
+                password.type = "password"; 
+                password.placeholder = "Contraseña";
+                password.name = "password";
+
+                let buttonlog = document.createElement('input');
+                buttonlog.type = "submit"; 
+                buttonlog.value = "Ingresar"; 
+
             }
 
             constructor() {
@@ -194,16 +238,16 @@
                     logo: {
                         src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
                     }, 
-                    background: "black"
+                    background: "black",
+                    AltBlog: scope
                 }).dom )
                 document.body.append(this.dom, this.newPostBtn);
                 this.getPosts();
             }
         }
-        
         let alt = new AltBlog();
-        //showByType("Inicio")
-
+        
     </script>
+
 </body>
 </html>

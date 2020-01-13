@@ -21,13 +21,16 @@ class WMToolbar {
         let searchboxInput = document.createElement('input', );
         searchboxInput.classList.add("WMToolbar_searchboxInput");
         searchboxInput.placeholder = "Buscar..."; 
+        searchboxInput.addEventListener("input", function (){
+            options.AltBlog.search(searchboxInput.value);
+        })
         searchboxCont.append(searchboxInput);
         
         this.searchboxOptions = document.createElement('div');
         this.searchboxOptions.classList.add("WMToolbar_searchboxOptions");
         this.searchboxOptions.innerHTML = "lorem ipsum"
         searchboxCont.append(this.searchboxOptions);
-        this.dom.append(searchboxCont)
+        this.dom.append(searchboxCont);
 
         
         let sections = document.createElement('div');
