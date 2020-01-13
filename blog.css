@@ -1,0 +1,131 @@
+body{
+
+    font-family: 'Montserrat', sans-serif;
+    margin: 0px;
+    background: #303030; 
+}
+.container_posts{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: #303030;
+    width: 100%;
+    box-sizing: border-box;
+}
+.post{
+    width: 100%;
+    max-width: 300px;
+    margin: 16px;
+    padding: 8px;  
+    color: white;
+}
+.post .post_image{
+    width: 100%;
+    height: 200px;
+    background-size: cover !important;
+    background-position: center center !important;
+}
+.post h1.post_title, .post h3.post_subtitle{
+    margin: 0px;
+}
+.post h1.post_title{
+    font-size: 2.5em;
+    font-weight: 100;
+    font-family: 'Source Serif Pro', serif;
+}
+.post h3.post_subtitle{
+    color: grey; 
+    font-size: 1.5em;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.post .post_author{
+    margin-bottom: 8px;
+}
+
+.addPost{
+    line-height: 80px;
+    text-align: center;
+    text-decoration: none;
+    width: 80px;
+    height: 80px;
+    background-color: #95E3BB;
+    cursor: pointer;
+    float: right;
+    margin-top: -80px;
+    margin-right: 5px;
+    font-size: 50px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 24px;
+    right: 24px
+}
+.ce-code__textarea{
+    background: black;
+    color: white;
+    border: none;
+    font-size: auto;
+    margin: 0;
+}
+
+
+html, body, #AltEditor, .AltBlogContainer{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: #303030;
+    color: white;
+    box-sizing: border-box;
+    margin: 0;
+}
+#AltEditor{
+    
+}
+#PostEditor, #PostTitle, #PostSubtitle, hr{
+    width: 100%;
+    max-width: 650px;
+}
+#PostTitle{
+    font-size: 3.5em;
+    margin: 16px 0px;
+    margin-bottom: 0px;
+    margin-top: auto;
+    font-family: 'Source Serif Pro';
+}
+#PostSubtitle{
+    font-size: 2em;
+    font-weight: 600;
+    margin: 16px 0px;
+    margin-top: 0px;
+    color: #d0d0d0;
+}
+#PostHeader{
+    width: 100%;
+    height: 80vh;
+    /*background: black;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+}
+#PostUpdate{
+    margin: 8px;
+    align-self: flex-end;
+    justify-self: flex-start;
+    -webkit-appearance: none;
+    background: rgb(0,122,255);
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
+.codex-editor__redactor{
+    /*margin-right: none !important;*/
+}

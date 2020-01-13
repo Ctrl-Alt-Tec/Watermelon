@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="editor.js"></script>
+    <script src="editor_modules/code.js"></script>
+    <script src="editor_modules/header.js"></script>
+    <script src="editor_modules/list.js"></script>
+    <script src="editor_modules/paragraph.js"></script>
+    <script src="editor_modules/raw.js"></script>
+    <script src="editor_modules/simple_image.js"></script>
+    <script src="editor_modules/table.js"></script>
+    <script src="editor_modules/embed.js"></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
@@ -40,211 +49,18 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="WMToolbar.css">
-    <style>
-
-        body{
-
-            font-family: 'Montserrat', sans-serif;
-            margin: 0px;
-            background: #303030; 
-        }
-        .container_posts{
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            background: #303030;
-        }
-        .post{
-            width: 100%;
-            max-width: 300px;
-            margin: 16px;
-            padding: 8px;  
-            color: white;
-        }
-        .post .post_image{
-            width: 100%;
-            height: 200px;
-            background-size: cover !important;
-            background-position: center center !important;
-        }
-        .post h1.post_title, .post h3.post_subtitle{
-            margin: 0px;
-        }
-        .post h1.post_title{
-            font-size: 2.5em;
-            font-weight: 100;
-            font-family: 'Source Serif Pro', serif;
-        }
-        .post h3.post_subtitle{
-            color: grey; 
-            font-size: 1.5em;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-weight: 400;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-        .post .post_author{
-            margin-bottom: 8px;
-        }
-
-        .addPost{
-            line-height: 80px;
-            text-align: center;
-            text-decoration: none;
-            width: 80px;
-            height: 80px;
-            background-color: #95E3BB;
-            cursor: pointer;
-            float: right;
-            margin-top: -80px;
-            margin-right: 5px;
-            font-size: 50px;
-            border-radius: 50%;
-            position: fixed;
-            bottom: 24px;
-            right: 24px
-        }
-        
-        
-    </style>
+    <link rel="stylesheet" href="blog.css">
 </head>  
 <body>
     <script src="WMToolbar.js"></script>
+    <script src="blog.js"></script>
     <script>
-        class Post {
-            constructor(id, data, options){
-                this.dom = document.createElement('div');
-                this.dom.classList.add("post");
-
-                let img = document.createElement('div');
-                img.style.background = "url('"+data.image+"')";
-                img.classList.add('post_image');
-
-                let title = document.createElement('h1');
-                title.classList.add("post_title");
-                title.innerText = data.title;
-                
-                let author = document.createElement('div');
-                author.classList.add("post_author");
-                author.innerText = data.author;
-                
-                let date = document.createElement('div');
-                date.classList.add("post_date");
-                //date.innerText = data.date.toLocaleDateString();
-                
-                let subtitle = document.createElement('h3'); 
-                subtitle.classList.add("post_subtitle"); 
-                subtitle.innerText = data.subtitle; 
-
-                this.dom.append(img, title, subtitle, author, date);
-
-                this.dom.addEventListener('click', function(){
-                    options.onClick(id);
-                })
-
-            }
-        }
+        
 
 
 
         
-        class AltBlog{
-            async getPosts(){
-                let scope = this;
-                db.collection("posts").get().then(function(posts){
-                    scope.posts = posts;
-                    scope.showByType("Inicio"); 
-                })
-            }
-
-            showByType(type){
-                let scope = this;
-                document.querySelector('.container_posts').innerHTML = ""
-                if(type == "Inicio"){
-                    scope.posts.forEach(function(item){
-                        scope.dom.append(new Post(item.id, item.data(), {
-                            onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
-                        }).dom)
-                    }) 
-                }else{
-                    scope.posts.docs.filter(function(item){ return item.data().section==type }).forEach(function(item){
-                        scope.dom.append(new Post(item.id, item.data(), {
-                            onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
-                        }).dom)   
-                    })
-                }   
-            }
-
-            search(str) {
-                let scope = this; 
-                document.querySelector('.container_posts').innerHTML = ""
-                let results = scope.posts.docs.filter(function(item){ return item.data().title.toLowerCase().includes(str.toLowerCase()) || item.data().subtitle.toLowerCase().includes(str.toLowerCase()) || item.data().author.toLowerCase().includes(str.toLowerCase())  })
-                scope.dom.style.padding = "0px";
-
-                results.forEach(function(item){
-                    scope.dom.append(new Post(item.id, item.data(), {
-                        onClick: function(id){ console.log(id); window.location.href = 'editor.html?post='+id }
-                    }).dom)   
-                })
-
-                if(results.length == 0){
-                    scope.dom.append("¿Ves? Está vacío, no hay ningún post para: " + str);
-                    scope.dom.style.color = "white"; 
-                    scope.dom.style.padding = "10%"; 
-                }
-            }
-
-            login(){
-                this.dom.innerHTML = "";
-                this.dom.style.padding = "10%"; 
-
-                let title = document.createElement('h1');
-                title.innerText = "Inicia sesión";
-                title.style.color = "white"; 
-                title.style.textAlign = "center"; 
-                title.style.width = "100%"; 
-
-                let username = document.createElement('input');
-                username.name = "username";
-                username.placeholder = "Usuario"; 
-                let password = document.createElement('input');
-                password.type = "password"; 
-                password.placeholder = "Contraseña";
-                password.name = "password";
-
-                let buttonlog = document.createElement('input');
-                buttonlog.type = "submit"; 
-                buttonlog.value = "Ingresar"; 
-
-            }
-
-            constructor() {
-                let scope = this;
-                this.dom = document.createElement('div');
-                this.dom.classList.add("container_posts");
-                this.newPostBtn = document.createElement('div');
-                this.newPostBtn.classList.add('addPost');
-                this.newPostBtn.innerText = '+';
-                this.newPostBtn.addEventListener('click', function(){
-                    window.location.href = 'editor.html'
-                })
-                document.body.prepend( new WMToolbar({
-                    sections: [
-                        'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
-                    ],
-                    sectionsOnClick: function(section){
-                        scope.showByType(section)
-                    },
-                    logo: {
-                        src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
-                    }, 
-                    background: "black",
-                    AltBlog: scope
-                }).dom )
-                document.body.append(this.dom, this.newPostBtn);
-                this.getPosts();
-            }
-        }
+        
         let alt = new AltBlog();
         
     </script>

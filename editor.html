@@ -19,78 +19,12 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
 
-    <style>
-        .ce-code__textarea{
-            background: black;
-            color: white;
-            border: none;
-            font-size: auto;
-            margin: 0;
-        }
+    <link rel="stylesheet" href="blog.css">
 
-
-        html, body, #AltEditor{
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            background: #303030;
-            color: white;
-            box-sizing: border-box;
-            margin: 0;
-        }
-        #AltEditor{
-            
-        }
-        #PostEditor, #PostTitle, #PostSubtitle, hr{
-            width: 100%;
-            max-width: 650px;
-        }
-        #PostTitle{
-            font-size: 3.5em;
-            margin: 16px 0px;
-            margin-bottom: 0px;
-            margin-top: auto;
-            font-family: 'Source Serif Pro';
-        }
-        #PostSubtitle{
-            font-size: 2em;
-            font-weight: 600;
-            margin: 16px 0px;
-            margin-top: 0px;
-            color: #d0d0d0;
-        }
-        #PostHeader{
-            width: 100%;
-            height: 80vh;
-            /*background: black;*/
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            background-size: cover;
-            background-position: top;
-            background-attachment: fixed;
-        }
-        #PostUpdate{
-            margin: 8px;
-            align-self: flex-end;
-            justify-self: flex-start;
-            -webkit-appearance: none;
-            background: rgb(0,122,255);
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-        }
-        .codex-editor__redactor{
-            /*margin-right: none !important;*/
-        }
-    </style>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-auth.js"></script>
 
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -120,167 +54,13 @@
 <body>
 
     <script src="WMToolbar.js"></script>
+    <script src="blog.js"></script>
 
     <script>
-        class Editor{
-            async loadData(){
-                let scope = this;
-                
-                let data = await db.collection("posts").doc(scope.postId).get();
-
-                scope.postTitle.innerText = data.data()['title'];
-                scope.postSubtitle.innerText = data.data()['subtitle'];
-                scope.postHeader.style.backgroundImage="url('"+ data.data().image +"')";
-                scope._editor = new EditorJS({
-                    tools: { 
-                        header: Header,
-                        image: SimpleImage,
-                        list: {
-                            class: List,
-                            inlineToolbar: true,
-                        }, 
-                        paragraph: {
-                            class: Paragraph, 
-                            inlineToolbar: true
-                        }, 
-                        //raw: RawTool,
-                        code: CodeTool, 
-                        table: Table,
-                        embed: {
-                            class: Embed, 
-                            inlineToolbar: true,
-                        },
-                    },
-                    placeholder: "Empiece a escribir o presione tab para añadir contenido", 
-                    holder: scope.postEditor,
-                    data: data.data(),
-                });
-            }  
-
-            loadEmpty(){
-                let scope = this;
-                scope._editor = new EditorJS({
-                    tools: { 
-                        header: Header,
-                        image: SimpleImage,
-                        list: {
-                            class: List,
-                            inlineToolbar: true,
-                        }, 
-                        paragraph: {
-                            class: Paragraph, 
-                            inlineToolbar: true
-                        }, 
-                        //raw: RawTool,
-                        code: CodeTool, 
-                        table: Table,
-                        embed: {
-                            class: Embed, 
-                            inlineToolbar: true,
-                        },
-                    },
-                    placeholder: "Empiece a escribir o presione tab para añadir contenido", 
-                    holder: scope.postEditor,
-                });
-            } 
-
-            update(){
-                let scope = this;
-                this._editor.save().then(function(data){
-                    console.log(data)
-                    if(postID){
-                        db.collection("posts").doc(scope.postId).update({
-                            title: scope.postTitle.innerText, 
-                            subtitle: scope.postSubtitle.innerText,
-                            ...data
-                        })
-                        .then(function(){
-                            console.log("Doument updated")
-                        })
-                        .catch(function(){
-                            console.log("Document not updated")
-                        })
-                    } else {
-                        db.collection("posts").add({
-                            title: scope.postTitle.innerText, 
-                            subtitle: scope.postSubtitle.innerText,
-                            ...data
-                        })
-                        .then(function(docRef){
-                            //console.log("Doument updated")
-                            window.location.href = 'editor.html?post='+docRef.id
-                        })
-                        .catch(function(){
-                            console.log("Document not updated")
-                        })
-                    }
-                })
-            }
-
-            constructor(postId){
-                let scope = this;
-                this.postId = postId;
-                this.dom = document.createElement('div');
-                this.dom.id = "AltEditor";   
-                this.postHeader = document.createElement('div');
-                this.postHeader.id="PostHeader";
-
-                
-
-                this.postTitle = document.createElement('h1');
-                this.postTitle.id = "PostTitle";
-                this.postTitle.innerText = "Título";
-                this.postTitle.contentEditable = "true";
-                this.postSubtitle = document.createElement('h2');
-                this.postSubtitle.id = "PostSubtitle";
-                this.postSubtitle.innerText = "Subtitulo";
-                this.postSubtitle.contentEditable = "true";
-
-                this.postBtn = document.createElement('button');
-                this.postBtn.id = "PostUpdate";
-
-                this.postHeader.append(this.postBtn, this.postTitle, this.postSubtitle);
-
-
-                this.postHeader.prepend( new WMToolbar({
-                    sections: [
-                        'Inicio', 'Blog', 'Retos', 'Talleres', 'Recursos'
-                    ],
-                    sectionsOnClick: function(section){
-                        console.log(section)
-                    },
-                    logo: {
-                        src: "https://ctrl-alt-tec.hackclub.com/watermelon/logo.png",
-                        onclick: function(){
-                            document.location.href = "index.html";
-                        }
-                    },
-                }).dom )
-
-                this.postEditor = document.createElement('div');
-                this.postEditor.id="PostEditor";
-                
-                this.dom.append(this.postHeader, this.postEditor);
-                if(postId){
-                    this.loadData();
-                    this.postBtn.innerText = "Update";
-
-                }else{
-                    this.loadEmpty();
-                    this.postBtn.innerText = "Publish";
-
-                }              
-                scope.postBtn.addEventListener('click', function(){
-                    scope.update(postID)
-                }); 
-            }
-        }
-
-        
-
+        let alt = new AltBlog();
         let postID = new URLSearchParams(window.location.search).get('post');
         let altEditor = new Editor(postID);
-        document.body.append(altEditor.dom);
+        
 
     </script>
 </body>
