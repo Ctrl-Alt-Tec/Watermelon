@@ -2,6 +2,7 @@
 name: Watermelon 🍉
 description: Hola mundo
 author: @edvilme
+category: Blog
 ---
 
 # Watermelon 🍉
