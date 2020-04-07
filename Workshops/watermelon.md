@@ -14,11 +14,6 @@ En Ctrl Alt Tec cada día nos esforzamos por lograr precisamente eso, pues a lo 
 
 A pesar de que nos hemos diversificado y hacemos software, venta de productos, donaciones, proyectos, etc., ese sigue siendo nuestro fin último. Por ello y con intención de brindarlo a más gente, creamos watermelon.
 
-```latex
-\frac{\partial}{\partial x}=a
-```
-
-
 ## Una plataforma para el aprendizaje
 Watermelon permitirá a todo el mundo participar en nuestras actividades, a su elección y conveniencia. Es una plataforma en línea en la que subiremos retos, clases, talleres y demás actividades que hagamos dentro del grupo. 
 
