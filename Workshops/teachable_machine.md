@@ -2,6 +2,7 @@
 name: 'Máquina Enseñable'
 description: 'Introducción a Machine Learning, sin necesidad de programar'
 author: '@MatthewStanciu'
+category: 'Talleres'
 ---
 
 # Máquina Enseñable 🤖
