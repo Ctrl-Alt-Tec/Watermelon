@@ -1,5 +1,9 @@
 # Watermelon
-Watermelon is a web platform for uplaoding many of the group's activities and resources online. In development, currently @ /Website/watermelon
+Watermelon is a web platform for uplaoding many of the group's activities and resources online. The source code will later be packaged and archived at /altBlog.
 
-[ES]
-La documentación, planeación, objetivos y arquitectura del sistema está disponible en https://docs.google.com/document/d/1k6k-raDHQ37pZC8tIuwTavXL9D76wZO68NCED_MqmJI/edit#
+## Technologies
+Watermelon is built on the following libraries and APIs:
+* [GitHub REST API](https://developer.github.com/v3/)
+* [Showdown JS](http://www.showdownjs.com/)
+* [Highlight JS](https://highlightjs.org/)
+* [KaTeX](https://katex.org/)
