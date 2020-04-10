@@ -281,11 +281,14 @@
                     this.posts = posts;
                     console.log(this.posts)
                     this.renderPosts();
+
+                    let postQuery = new URLSearchParams(location.search).get("post")
+                    if(postQuery != undefined){
+                        this.openPost(postQuery+'.md');
+                    }
+
                 });
-                let postQuery = new URLSearchParams(location.search).get("post")
-                if(postQuery != undefined){
-                    this.openPost(postQuery+'.md');
-                }
+                
 
 
             }
