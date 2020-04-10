@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,800,900" rel="stylesheet">
+    <script src="https://ctrl-alt-tec.github.io/altUI/altUI.js?v=3"></script>
+    <link href="https://ctrl-alt-tec.github.io/altUI/altUI.css" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/k7ofrwtq9jqn0egnyhe9rsw1hqx7cbl1e74x88sj94wzps7i/tinymce/5/tinymce.min.js"></script>
+    <title>Document</title>
+    <style>
+        body{
+            background: lightgray;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+
+
+        .WMToolbar{
+            background: white;
+            padding: 0px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0px;
+        }
+        .WMToolbar img.WMToolbar_logo{
+            height: 48px;
+            margin: 8px;
+        }
+        .WMToolbar div.WMToolbar_searchboxCont{
+            background: red;
+            flex: 1;
+            min-width: 400px;
+            position: relative;
+        }
+        .WMToolbar input.WMToolbar_searchboxInput{
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+            font-size: 2rem;
+            font-weight: 400;
+            border: none;
+            border-radius: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .WMToolbar input.WMToolbar_searchboxInput:active{
+            background: white;
+        }
+        .WMToolbar div.WMToolbar_searchboxOptions{
+            position: absolute;
+            width: 100%;
+            background: white;
+            padding: 16px;
+            box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+        }
+
+        .WMToolbar .WMToolbar_sections{
+            display: flex;
+            align-items: center;
+            flex: 1
+        }
+        .WMToolbar .WMToolbar_sections>*{
+            flex: 1;
+            padding: 16px;
+            font-size: 1.2em;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <script src="index.js"></script>
+</body>
+</html>
