@@ -1,0 +1,75 @@
+.WMToolbar{
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0px;
+    
+    color: white;
+    z-index: 2;
+    overflow: auto;
+    /*
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background: black;
+*/
+}
+.WMToolbar img.WMToolbar_logo{
+    height: 48px;
+    margin: 8px;
+}
+.WMToolbar div.WMToolbar_searchboxCont{ 
+    flex: 1;
+    width: 400px;
+    position: relative;
+}
+.WMToolbar input.WMToolbar_searchboxInput{
+    flex: 1;
+    width: 100%;
+    padding: 16px;
+    font-size: 2rem;
+    font-weight: 400;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    background: transparent;
+    color: inherit;
+}
+.WMToolbar input.WMToolbar_searchboxInput:focus{
+    background: white;
+    color: black;
+}
+.WMToolbar div.WMToolbar_searchboxOptions{
+    position: absolute;
+    width: 100%;
+    background: white;
+    padding: 16px;
+    box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+}
+
+.WMToolbar .WMToolbar_sections{
+    display: flex;
+    align-items: center;
+    flex: 1
+ }
+.WMToolbar .WMToolbar_sections>*{
+    flex: 1;
+    padding: 16px;
+    font-size: 1.2em;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.WMToolbar .WMToolbar_sections>*:hover{
+    background: rgba(200,200,200,0.4);
+}
+
+
+.WMToolbar_sections .active{
+    color: #FF535D; 
+    font-weight: 800; 
+}
+.WMToolbar_sections .nonactive{
+    color: white; 
+}

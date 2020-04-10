@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="editor.js"></script>
+    <script src="editor_modules/code.js"></script>
+    <script src="editor_modules/header.js"></script>
+    <script src="editor_modules/list.js"></script>
+    <script src="editor_modules/paragraph.js"></script>
+    <script src="editor_modules/raw.js"></script>
+    <script src="editor_modules/simple_image.js"></script>
+    <script src="editor_modules/table.js"></script>
+    <script src="editor_modules/embed.js"></script>
+    <link rel="stylesheet" href="WMToolbar.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="blog.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-auth.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyBaAIgZY3coG_Vlhv5UdZrqrlxTeLm_-RE",
+        authDomain: "watermelon-974ca.firebaseapp.com",
+        databaseURL: "https://watermelon-974ca.firebaseio.com",
+        projectId: "watermelon-974ca",
+        storageBucket: "watermelon-974ca.appspot.com",
+        messagingSenderId: "458674442702",
+        appId: "1:458674442702:web:42fa5b0b32ce9253381b9f",
+        measurementId: "G-YMWDNF8GGQ"
+    }; 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    let db = firebase.firestore();
+
+    </script>
+</head>
+<body>
+
+    <script src="WMToolbar.js"></script>
+    <script src="blog.js"></script>
+
+    <script>
+        let alt = new AltBlog();
+        let postID = new URLSearchParams(window.location.search).get('post');
+        let altEditor = new Editor(postID);
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+
+    <title>Document</title>
+    <style>
+        :root{
+            --theme-ui-colors-darker: #121217;
+            --theme-ui-colors-dark: #17171d;
+            --theme-ui-colors-darkless: #252429;
+            --theme-ui-colors-black: #1f2d3d;
+            --theme-ui-colors-steel: #273444;
+            --theme-ui-colors-slate: #3c4858;
+            --theme-ui-colors-muted: #8492a6;
+            --theme-ui-colors-smoke: #e0e6ed;
+            --theme-ui-colors-snow: #f9fafc;
+            --theme-ui-colors-white: #ffffff;
+            --theme-ui-colors-red: #ec3750;
+            --theme-ui-colors-orange: #ff8c37;
+            --theme-ui-colors-yellow: #f1c40f;
+            --theme-ui-colors-green: #33d6a6;
+            --theme-ui-colors-cyan: #5bc0de;
+            --theme-ui-colors-blue: #338eda;
+            --theme-ui-colors-twitter: #1da1f2;
+            --theme-ui-colors-facebook: #3b5998;
+            --theme-ui-colors-instagram: #e1306c;
+            --theme-ui-colors-text: #1f2d3d;
+            --theme-ui-colors-background: #ffffff;
+            --theme-ui-colors-elevated: #ffffff;
+            --theme-ui-colors-sheet: #f9fafc;
+            --theme-ui-colors-sunken: #e0e6ed;
+            --theme-ui-colors-border: #e0e6ed;
+            --theme-ui-colors-placeholder: #8492a6;
+            --theme-ui-colors-secondary: #3c4858;
+            --theme-ui-colors-primary: #ec3750;
+            --theme-ui-colors-accent: #338eda;
+
+
+
+
+            --wm-color-text-primary: black;
+            --wm-color-text-secondary: #3c4858
+            --wm-color-background: white;
+            --wm-color-foreground: white;
+            --wm-color-nav: rgba(255,255,255)
+
+        }
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+            margin: 0px;
+        }
+
+
+
+        #navbar{
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            z-index: 2;
+            position: sticky;
+            align-items: center;
+            top: 0;
+            padding: 0px 8px;
+        }
+        #navbar span[name="nav_button"]{
+            height: 48px;
+            width: 48px;
+            border-radius: 24px;
+            background-color: black;
+            margin: 8px;
+            color: white;
+            line-height: 48px;
+            font-size: 36px;
+            text-align: center;
+            font-family: 'Material Icons';
+
+        }
+        #navbar img#logo{
+            height: 48px;
+            margin: 8px;
+        }
+        #navbar ul[name="nav_sections"]{
+            list-style: none;
+            display: flex;
+            margin: 0px;
+            padding: 0px;
+        }
+        #navbar ul[name="nav_sections"] li{
+            flex: 1;
+            text-align: center;
+            font-size: 1.2em;
+            padding: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #navbar input{
+            padding: 8px 16px;
+            font-size: 1.2em;
+            line-height: 1em;
+            margin: 8px;
+            border: none;
+            background: var(--theme-ui-colors-smoke);
+            border-radius: 24px;
+            margin-left: auto;
+        }
+
+
+        #container{
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,var(--theme-ui-colors-sheet,#f9fafc),var(--theme-ui-colors-sunken,#e0e6ed));
+            align-content: baseline;
+
+        }
+
+        #container>h1.filter_title{
+            width: 100%;
+            margin: 16px;
+            padding-bottom: 8px;
+            box-sizing: border-box;
+            font-size: 3em;
+            border-bottom: 1px solid;
+        }
+
+        .card{
+            flex: 1;
+            background: var(--theme-ui-colors-white);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--theme-ui-colors-border);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.125);
+            margin: 16px;
+        }
+
+        .card:hover{
+            transform: scale(1.025);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.0625), 0 8px 12px rgba(0,0,0,0.125);
+        }
+
+        .card h1{
+            margin: 0.25em 0px;
+        }
+        .card span[name="description"]{
+            color: var(--theme-ui-colors-muted)
+        }
+
+
+        #post{
+            display: flex;
+            flex-direction: column;
+            background: var(--theme-ui-colors-white);
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+            width: 100%;
+            position: relative;
+        }
+
+
+        #post > main, #post > header{
+            padding: 16px;
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #post>header{
+            height: 40vh;
+            background: var(--theme-ui-colors-red);
+            text-align: center;
+            justify-content: center;
+        }
+
+        #post>header>h1[name="title"]{
+            font-size: 3em;
+            margin: 0px;
+            margin-top: auto;
+        }
+        #post>header>h2[name="description"]{
+            font-size: 1.5em;
+            margin: 16px;
+        }
+        #post>header>span[name="author"]{
+            font-weight: 600;
+            margin-top: auto;
+            margin-bottom: 32px;
+            background-color: var(--theme-ui-colors-white);
+            padding: 8px 16px;
+            color: black
+        }
+
+
+        #post>main>*{
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #post>main img{
+            max-width: 100%;
+            margin: 0px auto;
+            display: block;
+        }
+        #post>main>pre{
+            padding: 16px;
+            background-color: var(--theme-ui-colors-black);
+            border-radius: 8px;
+            color: var(--theme-ui-colors-white);
+        }
+        #post>main>blockquote{
+            background: var(--theme-ui-colors-sunken);
+            padding: 0px 24px;
+            border-left: 3px solid;
+        }
+        #post>main>table{
+            border-collapse: collapse;
+        }
+        #post>main>table, #post>main>table th, #post>main>table td{
+            border: 0.5px solid var(--theme-ui-colors-muted);
+            padding: 8px
+        }
+
+
+        @media only screen and (max-width: 600px){
+            #navbar{
+                flex-wrap: wrap;
+            }
+            #navbar ul[name="nav_sections"]{
+                flex: 1
+            }
+            #navbar input{
+                margin: 8px;
+                flex: 1;
+                padding: 16px
+            }
+        }
+
+    </style>
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+</head>
+<body>
+
+    <div id="navbar">
+        <span name="nav_button">
+            arrow_back
+        </span>
+        <img src="https://ctrl-alt-tec.hackclub.com/img/logo-block.png" alt="" id="logo" name="nav_home">
+        <ul name="nav_sections">
+            <li>Blog</li>
+            <li>Retos</li>
+            <li>Talleres</li>
+        </ul>
+
+        <input type="search" placeholder="Buscar...">
+
+    </div>
+
+    <div id="container"></div>
+    <div id="post"></div>
+    <script>
+        let __Blog;
+        class Blog{
+            constructor(options){
+                __Blog = this;
+                this.navbar = new NavBar()
+                this.posts = []
+                this.activePost = undefined;
+                this.container = options.container;
+                this.getPosts(options.githubTree).then(posts=>{
+                    this.posts = posts;
+                    console.log(this.posts)
+                    this.renderPosts();
+                });
+            }
+            async getPosts(src){
+                let posts = await fetch(src)
+                let posts_json = await posts.json();
+                return Promise.all(posts_json.map(async post => {
+                    let content = await fetch(post.download_url);
+                    let content_text = await content.text();
+                    let content_html = converter.makeHtml(content_text)
+                    return {
+                        content: content_html,
+                        name: post.name,
+                        metadata: converter.getMetadata()
+                    };
+                }))
+            }
+
+            renderPosts(fn = ()=>(true) , label=undefined){
+                if(this.activePost!=undefined){
+                    this.closePost()
+                }
+                this.container.innerHTML=``
+                
+                if(label!=undefined){
+                    let title = document.createElement('h1');
+                    title.className = 'filter_title';
+                    title.innerHTML = label;
+                    this.container.append(title)
+                }
+                
+                this.posts.filter(fn).forEach(post=>{
+                    let card = new Card(post)
+                    this.container.append(card)
+                })
+            }
+
+            openPost(name){
+                let post = this.posts.find(i=>i.name==name);
+                this.activePost = new Post(post);
+                this.navbar.addNavButton(()=>{
+                    this.activePost.close()
+                })
+            }
+
+            closePost(){
+                this.activePost.close();
+                this.activePost = undefined
+            }
+        }
+
+        let converter = new showdown.Converter({
+            ghCompatibleHeaderId: true,
+            strikethrough: true, 
+            tables: true,
+            metadata: true
+        })
+
+        class Card{
+            constructor(post){
+                let content = post.content
+                let metadata = post.metadata
+                let template = document.querySelector("#template_card").content.cloneNode(true);
+                this.dom = document.createElement('div');
+                this.dom.className = 'card'
+                this.dom.append(template)
+                this.dom.querySelector('[name="title"]').innerHTML = metadata.name
+                this.dom.querySelector('[name="description"]').innerHTML = metadata.description
+                this.dom.addEventListener('click', ()=>{ __Blog.openPost(post.name) })
+                return this.dom
+            }
+        }
+        let __Post;
+        class Post{
+            constructor(post){
+                __Post=this;
+                let template = document.querySelector("#template_post").content.cloneNode(true);
+
+                this.dom = document.querySelector("#post")
+                this.dom.style.display = 'flex';
+
+                this.dom.innerHTML=""
+
+                this.dom.append(template)
+                this.dom.querySelector("header h1").innerHTML = post.metadata.name;
+                this.dom.querySelector("header h2").innerHTML = post.metadata.description;
+
+                this.dom.querySelector('main').innerHTML = post.content
+
+                this.dom.querySelectorAll('pre code').forEach(block=>{
+                    hljs.highlightBlock(block)
+                })
+            }
+            close(){
+                this.dom.style.display = 'none';
+                this.dom.innerHTML = "";
+                __Blog.navbar.removeNavButton();
+            }
+        }
+
+        class NavBar{
+            constructor(){
+                this.dom=document.querySelector("#navbar");
+                this.dom.querySelectorAll('ul[name="nav_sections"] li').forEach(section=>{
+                    section.addEventListener('click', ()=>{
+                        //__Post.close();
+                        __Blog.renderPosts(i=>i.metadata.category == section.innerHTML, `Categoría: ${section.innerHTML}`);
+                    })
+                })
+                this.dom.querySelector('img[name="nav_home"]').addEventListener('click', ()=>{
+                    __Blog.renderPosts();
+                })
+
+                this.dom.querySelector('input[type="search"]').addEventListener('input', (e)=>{
+                    __Blog.renderPosts(i=>i.content.toLowerCase().includes(e.target.value.toLowerCase()), `Resultados de búsqueda: ${e.target.value}`)
+                })
+
+                this.navButtonFn = ()=>{}
+                this.removeNavButton()
+            }
+            removeNavButton(){
+                this.dom.querySelector('[name="nav_button"]').style.display = 'none';
+                this.dom.querySelector('[name="nav_button"]').removeEventListener('click', this.navButtonFn)
+            }
+            addNavButton(fn){
+                this.navButtonFn = fn
+                this.dom.querySelector('[name="nav_button"]').style.display = 'block'
+                this.dom.querySelector('[name="nav_button"]').addEventListener('click', fn)
+            }
+            
+        }
+
+        let watermelon = new Blog({
+            container: document.querySelector("#container"),
+            githubTree: 'https://api.github.com/repos/Ctrl-Alt-Tec/Watermelon/contents/Workshops',
+        })
+
+    </script>
+
+
+    <template id="template_card">
+        <h1 name="title">Title</h1>
+        <span name="description">Lorem ipsum</span>
+    </template>
+
+
+    <template id="template_post">
+        <header>
+            <h1 name="title">Title</h1>
+            <h2 name="description">Description</h2>
+            <span name="author">@edvilme</span>
+        </header>
+        <main name="content">
+        </main>
+    </template>
+
+</body>
+</html>
