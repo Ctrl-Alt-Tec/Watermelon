@@ -5,7 +5,7 @@ author: @a01422885
 category: Blog
 ---
 
-# 🦟 Hack Quarantine 2020
+# 🦠 Hack Quarantine 2020
 
 Hola, soy Matías. Y durante las semanas pasadas, mi equipo y yo participamos en un hackathon virtual. Esta fue mi experiencia
 
