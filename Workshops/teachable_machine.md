@@ -29,4 +29,28 @@ Por ello, renombraremos "Class 1" a "me" (yo) y "Class 2" a "me with [some objec
 
 ![](https://raw.githubusercontent.com/hackclub/hackclub/master/workshops/teachable_machine/img/renameclass.GIF)
 
-> Continuar...
+Ahora entrenaremos el modelo. Enciende tu webcam para cada clase y da click en "Hold to Record" (pulsar para grabar) hasta que tengas unas cuantas muestras grabadas. Intenta tomar tantas fotos y capturar tantos ángulos, posiciones, variaciones, etc. puedas. Entre más datos haya, el modelo aprenderá mejor la diferencia entre ambas colecciones de datos. 
+
+![](https://raw.githubusercontent.com/hackclub/hackclub/master/workshops/teachable_machine/img/imagesamples.PNG)
+
+Una vez que hayas grabado suficientes muestras, da click en "Train Model" (entrenar modelo). El tiempo que toma entrenar el modelo dependerá del número de muestras pero usualmente toma alrededor de 30 segundos. 
+
+Ya que el modelo esté entrenado, debe aparecer una vista previa. ¡Pruébala! Si está borrosa en algunos ángulos o posiciones, regresa y graba mas muestras con esos ángulos o posiciones. Continúa con el mismo proceso hasta que el modelo identifique consisistentemente la mlase correcta.
+
+En nuestro ejemplo se vería así:
+
+![](https://raw.githubusercontent.com/hackclub/hackclub/master/workshops/teachable_machine/img/model.GIF)
+
+## Exportando nuestro modelo
+
+"Teachable Machine" almacenara tu modelo en sus servidores para poder usarlo en cualquier proyecto que necesites. Para hacerlo, de click en "Export Model" (exportar modelo), y luego en "Upload my model" (subir mi modelo) en la ventana emergente. Tras unos segundos deberá indicar el link a nuestro modelo. 
+
+![](https://raw.githubusercontent.com/hackclub/hackclub/master/workshops/teachable_machine/img/uploadedmodel.PNG)
+ 
+> Si te interesa ver los datos *crudos* de tu modelo, copia el link del modelo y añádele `model.json` al final.
+
+## Insertar en un sitio web
+Ahora es momento de añadir el modelo a tu propio proyecto. 
+Desplázate hacia abajo y
+
+> Terminar...
