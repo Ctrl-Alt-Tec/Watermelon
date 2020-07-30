@@ -200,8 +200,8 @@
             let social = document.createElement('section');
             social.className = 'social';
             social.append(
-                LikeButton('https://quantacsf.github.io/blog/'+slug),
-                Comments('https://quantacsf.github.io/blog/'+slug)
+                LikeButton('https://quantacsf.github.io/blog?post='+slug),
+                Comments('https://quantacsf.github.io/blog?post='+slug)
             )
             document.querySelector('#container').append(social)
             FB.XFBML.parse(social)
