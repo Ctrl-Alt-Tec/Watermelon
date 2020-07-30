@@ -62,8 +62,14 @@
             font-size: 1.4rem !important;
             font-weight: 600;
         }
-        #container article h1{
-            /* border-bottom: 0.5px solid rgb(160,160,160); */
+        #container section.social{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 24px;
+            margin-top: 24px;
+            background-color: snow;
         }
         .card{
             max-width: 300px;
@@ -92,6 +98,8 @@
             color: rgb(160,160,160);
         }
     </style>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v7.0&appId=1190445321316803&autoLogAppEvents=1" nonce="BUb9bUSz"></script>
+
 </head>
 <body>
     
@@ -108,7 +116,46 @@
 
     </div>
 
+
+    
+    
+    <!-- <div class="fb-like" 
+        data-href="https://quantacsf.github.io/blog" 
+        data-width="" data-layout="button_count" 
+        data-action="like" data-size="small" 
+        data-share="false"
+    ></div> -->
+    <!-- <div class="fb-like" 
+        data-href="https://quantacsf.github.io/blog/a" 
+        data-width="" data-layout="button_count" 
+        data-action="like" data-size="small" 
+        data-share="false"
+    ></div> -->
+
     <script>
+
+        const LikeButton = (url)=>{
+            let div = document.createElement('div');
+            div.className = 'fb-like';
+            div.setAttribute('data-href', url);
+            div.setAttribute('data-width', '');
+            div.setAttribute('data-layout', 'button_count');
+            div.setAttribute('data-action', 'like');
+            div.setAttribute('data-size', 'large');
+            div.setAttribute('data-share', 'false');
+            return div;
+        }
+
+
+        const Comments = (url) => {
+            let div = document.createElement('div');
+            div.className = 'fb-comments';
+            div.setAttribute('data-href', url);
+            div.setAttribute('data-numposts', '5');
+            div.setAttribute('data-width', '');
+            return div;
+        }
+
         const Card = (post, options) => {
             let postElement = document.createElement('a');
             postElement.className = 'card';
@@ -149,7 +196,15 @@
             let post_raw = await fetch('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/colab/quanta/blog/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
-            console.log('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/colab/quanta/blog/'+slug)
+            
+            let social = document.createElement('section');
+            social.className = 'social';
+            social.append(
+                LikeButton('https://quantacsf.github.io/blog/'+slug),
+                Comments('https://quantacsf.github.io/blog/'+slug)
+            )
+            document.querySelector('#container').append(social)
+            FB.XFBML.parse(social)
         }
 
 
