@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quanta | Blog</title>
+    <title>Ctrl Alt Tec | Blog</title>
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Blog" />
-    <meta property="og:description" content="Quanta. grupo estudiantil de programación en el Tec CSF" />
+    <meta property="og:title" content="Watermelon 🍉"/>
+    <meta property="og:description" content="Blog y recursos del grupo estudiantil de programación del Tec CSF" />
     <style>
         body, html {
             font-family: Arial, Helvetica, sans-serif;
@@ -107,7 +107,7 @@
     
     <nav>
         <a href="?">
-            <img src="./quanta.png" alt="quanta" srcset="">
+            <img src="https://ctrl-alt-tec.hackclub.com/img/logo-block.png" alt="CtrlAltTec" srcset="">
         </a>
         <input type="search" name="" id="">
     </nav>
@@ -164,7 +164,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts');
+            let posts_raw = await fetch('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/contenido/posts');
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -173,7 +173,7 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts'+slug);
+            let post_raw = await fetch('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
