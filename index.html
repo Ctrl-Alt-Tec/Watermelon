@@ -164,7 +164,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/contenido/posts');
+            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts');
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -173,7 +173,7 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch('https://cors-anywhere.herokuapp.com/ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
+            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
