@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@
     </nav>
     <div id="container"></div>
     <script>
+
         const blogBaseURL = 'https://blog.ctrl-alt-tec.hackclub.com?post=';
         const apiPosts = 'https://ctrl-alt-tec.herokuapp.com/contenido/posts';
 
@@ -75,7 +76,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch(apiPosts);
+            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts');
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -84,15 +85,15 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch(apiPosts+'/'+slug);
+            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
             let social = document.createElement('section');
             social.className = 'social';
             social.append(
-                LikeButton(blogBaseURL+slug),
-                Comments(blogBaseURL+slug)
+                LikeButton('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug),
+                Comments('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug)
             )
             document.querySelector('#container').append(social)
             FB.XFBML.parse(social)
