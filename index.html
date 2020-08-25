@@ -164,7 +164,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts');
+            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog');
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -173,15 +173,15 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
+            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
             let social = document.createElement('section');
             social.className = 'social';
             social.append(
-                LikeButton('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug),
-                Comments('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug)
+                LikeButton('https://quantacsf.github.io/blog?post='+slug),
+                Comments('https://quantacsf.github.io/blog?post='+slug)
             )
             document.querySelector('#container').append(social)
             FB.XFBML.parse(social)
