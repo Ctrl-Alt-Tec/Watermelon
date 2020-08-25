@@ -1,118 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ctrl Alt Tec | Blog</title>
+    <title>Quanta | Blog</title>
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Watermelon 🍉"/>
-    <meta property="og:description" content="Blog y recursos del grupo estudiantil de programación del Tec CSF" />
-    <style>
-        body, html {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        nav{
-            height: 70px;
-            background-color: rgba(255,255,255,0.8);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgb(200,200,200);
-            display: flex;
-            align-items: center;
-            padding: 8px 16px;
-            box-sizing: border-box;
-        }
-        nav a img{
-            height: 40px;
-        }
-        nav input[type='search']{
-            margin-left: auto;
-            padding: 8px 16px;
-            background-color: rgb(240,240,245);
-            border: none;
-            border-radius: 16px;
-            font-size: 1.2rem;
-        }
-        #container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 8px;
-        }
-        #container article{
-            max-width: 800px;
-            padding: 24px 8px;
-            overflow-x: hidden;
-        }
-        #container article p{
-            overflow: auto;
-        }
-        #container article .title span{
-            width: 100%;
-            font-size: 3rem !important;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 0.5em;
-            padding-bottom: 0.5em;
-            border-bottom: 0.5px solid rgb(160,160,160);
-        }
-        #container article .subtitle span{
-            font-size: 1.4rem !important;
-            font-weight: 600;
-        }
-        #container section.social{
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 24px;
-            margin-top: 24px;
-            background-color: snow;
-        }
-        .card{
-            max-width: 300px;
-            width: 100%;
-            margin: 8px;
-            padding: 16px;
-            border: 1px solid rgb(200,200,200);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            text-decoration: none;
-        }
-        .card .card_category{
-            font-weight: 600;
-            font-size: 1rem;
-            color: rgb(100,100,100);
-        }
-        .card .card_title{
-            margin: 0;
-            font-size: 2rem;
-            color: black;
-        }
-        .card .card_author{
-            margin-top: auto;
-            color: rgb(160,160,160);
-        }
-    </style>
+    <meta property="og:title" content="Quanta Blog"/>
+    <meta property="og:description" content="Blog y recursos del grupo estudiantil de física del Tec CSF" />
+    <link rel="stylesheet" href="style.css">
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v7.0&appId=1190445321316803&autoLogAppEvents=1" nonce="BUb9bUSz"></script>
 </head>
 <body>
     
     <nav>
         <a href="?">
-            <img src="https://ctrl-alt-tec.hackclub.com/img/logo-block.png" alt="CtrlAltTec" srcset="">
+            <img src="quanta.png" alt="Quanta" srcset="">
         </a>
         <input type="search" name="" id="">
     </nav>
     <div id="container"></div>
     <script>
+        const blogBaseURL = 'https://quantacsf.github.io/blog?post=';
+        const apiPosts = 'https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog';
+
+
 
         const LikeButton = (url)=>{
             let div = document.createElement('div');
@@ -164,7 +75,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts');
+            let posts_raw = await fetch(apiPosts);
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -173,15 +84,15 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/contenido/posts/'+slug);
+            let post_raw = await fetch(apiPosts+'/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
             let social = document.createElement('section');
             social.className = 'social';
             social.append(
-                LikeButton('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug),
-                Comments('https://ctrl-alt-tec.hackclub.com/watermelon?post='+slug)
+                LikeButton(blogBaseURL+slug),
+                Comments(blogBaseURL+slug)
             )
             document.querySelector('#container').append(social)
             FB.XFBML.parse(social)
