@@ -20,6 +20,10 @@
     </nav>
     <div id="container"></div>
     <script>
+        const blogBaseURL = 'https://quantacsf.github.io/blog?post=';
+        const apiPosts = 'https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog';
+
+
 
         const LikeButton = (url)=>{
             let div = document.createElement('div');
@@ -71,7 +75,7 @@
 
         let searchPosts = async ( cond = ()=>true )=>{
             document.querySelector('#container').innerHTML = ''
-            let posts_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog');
+            let posts_raw = await fetch(apiPosts);
             let posts = await posts_raw.json();
             posts.filter(cond).forEach(post => {
                 document.querySelector('#container').append(Card(post))
@@ -80,15 +84,15 @@
 
         let openPost = async (slug) => {
             document.querySelector('#container').innerHTML = ''
-            let post_raw = await fetch('https://ctrl-alt-tec.herokuapp.com/colab/quanta/blog/'+slug);
+            let post_raw = await fetch(apiPosts+'/'+slug);
             let post = await post_raw.text();
             document.querySelector('#container').innerHTML = post
             
             let social = document.createElement('section');
             social.className = 'social';
             social.append(
-                LikeButton('https://quantacsf.github.io/blog?post='+slug),
-                Comments('https://quantacsf.github.io/blog?post='+slug)
+                LikeButton(blogBaseURL+slug),
+                Comments(blogBaseURL+slug)
             )
             document.querySelector('#container').append(social)
             FB.XFBML.parse(social)
